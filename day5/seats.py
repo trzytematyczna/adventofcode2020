@@ -30,19 +30,21 @@ seat_list = list(map(lambda x: x.strip(), fpass))
 
 # seat_list = ["FBFBBFFRLR"]
 row_max, col_max = 0,0
+ids = []
 for s in seat_list:
     m = re.match("([F|B]+)([LR]+)",s)
 
     seat_row_string = m.groups()[0]
     # print(seat_row_string, len(seat_row_string), 2**len(seat_row_string))
     seat_row = sort_seats(seat_row_string, 0, (2**len(seat_row_string))-1)
-    print("row: ",seat_row)
+    # print("row: ",seat_row)
 
     seat_col_string = m.groups()[1]
     # print(seat_col_string, len(seat_col_string), 2**len(seat_col_string))
     seat_col = sort_seats(seat_col_string, 0, (2**(len(seat_col_string)) - 1))
-    print("col: ",seat_col)
+    # print("col: ",seat_col)
 
+    ids.append(seat_row*8+seat_col)
     if(seat_row>row_max):
         row_max = seat_row
         col_max = seat_col
@@ -52,6 +54,13 @@ for s in seat_list:
 
 print(row_max*8+col_max)
 
+ids.sort()
+
+fullid = set(range(min(ids), max(ids)+1))
+
+myid=fullid.difference(ids)
+
+print(myid)
 
 # function merge_sort(list m) is
 #     // Base case. A list of zero or one elements is sorted, by definition.
