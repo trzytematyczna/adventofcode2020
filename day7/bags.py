@@ -2,7 +2,7 @@ import re
 from networkx.algorithms.simple_paths import all_simple_paths
 import networkx as nx
 
-with open("input") as f:
+with open("input2") as f:
     fpass = f.readlines()
 
 bag_rules = list(map(lambda x: x.strip(), fpass))
@@ -57,18 +57,20 @@ print(len(myset))
 
 def weightme(bagfrom, bagto):
     sum_paths = 0
+    added_edges = set()
     for path in all_simple_paths(better_rules, bagfrom, bagto):
         p = 1
-        q = 1
+        q = 0
         for m in range(0,len(path)-1):
             print(path[m],path[m+1],":",better_rules.get_edge_data(path[m],path[m+1])["weight"])
             current_weight = int(better_rules.get_edge_data(path[m], path[m + 1])["weight"])
             print(q, p)
             p *= current_weight
-            if m != len(path)-2:
+            if m != len(path)-2 and ((path[m], path[m + 1]) not in added_edges):
+                added_edges.add((path[m], path[m + 1]))
                 q += current_weight
         print(path,q,p)
-
+        print(added_edges)
         sum_paths = sum_paths + p + q
     return sum_paths
 
@@ -85,3 +87,4 @@ print(sum_weight)
 # 51558
 # 52420
 # 52283
+
