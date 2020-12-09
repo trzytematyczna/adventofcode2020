@@ -6,11 +6,10 @@ codes = list(map(lambda x: int(x.strip()), fpass))
 preamble = 25
 
 def checksum(relative_start,relative_end,num):
-    for r in codes[relative_start:relative_end+1]:
-        for s in codes[relative_start:relative_end+1]:
-            if r != s:
-                if r + s == num:
-                    return True
+    for fi in range(relative_start,relative_end+1):
+        for si in range(fi,relative_end+1):
+            if codes[fi] + codes[si] == num:
+                return True
     return False
 
 
@@ -19,4 +18,4 @@ for i in range(preamble,len(codes)):
         print(codes[i])
 
 
-#40
+#85848519
